@@ -1,3 +1,37 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['fileToUpload'])) {
+    $target_dir = "uploads/";
+    $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+    $uploadOk = 1;
+    $fileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+    if (file_exists($target_file)) {
+        echo "Maaf, file sudah ada.";
+        $uploadOk = 0;
+    }
+
+    if ($_FILES["fileToUpload"]["size"] > 2000000) {
+        echo "Maaf, file terlalu besar.";
+        $uploadOk = 0;
+    }
+
+    if ($fileType != "jpg" && $fileType != "png" && $fileType != "jpeg" && $fileType != "gif") {
+        echo "Maaf, hanya file JPG, JPEG, PNG & GIF yang diizinkan.";
+        $uploadOk = 0;
+    }
+
+    if ($uploadOk == 0) {
+        echo "Maaf, file Anda tidak terunggah.";
+    } else {
+        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+            echo "File ". htmlspecialchars(basename($_FILES["fileToUpload"]["name"])). " telah diunggah.";
+        } else {
+            echo "Maaf, terjadi kesalahan saat mengunggah file Anda.";
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -28,34 +62,3 @@
 </body>
 
 </html>
-<?php
-$target_dir = "uploads/";
-$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-$uploadOk = 1;
-$fileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-if (file_exists($target_file)) {
-    echo "Maaf, file sudah ada.";
-    $uploadOk = 0;
-}
-
-if ($_FILES["fileToUpload"]["size"] > 2000000) {
-    echo "Maaf, file terlalu besar.";
-    $uploadOk = 0;
-}
-
-if ($fileType != "jpg" && $fileType != "png" && $fileType != "jpeg" && $fileType != "gif") {
-    echo "Maaf, hanya file JPG, JPEG, PNG & GIF yang diizinkan.";
-    $uploadOk = 0;
-}
-
-if ($uploadOk == 0) {
-    echo "Maaf, file Anda tidak terunggah.";
-} else {
-    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-        echo "File " . htmlspecialchars(basename($_FILES["fileToUpload"]["name"])) . " telah diunggah.";
-    } else {
-        echo "Maaf, terjadi kesalahan saat mengunggah file Anda.";
-    }
-}
-?>
