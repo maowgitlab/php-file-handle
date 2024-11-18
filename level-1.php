@@ -34,31 +34,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['fileToUpload'])) {
 
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unggah File</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
 </head>
-
-<body>
-    <h1>Unggah File</h1>
-    <form action="" method="post" enctype="multipart/form-data">
-        Pilih file untuk diunggah:
-        <input type="file" name="fileToUpload" id="fileToUpload">
-        <input type="submit" value="Unggah File" name="submit">
-    </form>
-    <h2>Daftar File yang Diunggah</h2>
-    <ul>
-        <?php
-        $files = scandir("uploads/");
-        foreach ($files as $file) {
-            if ($file != "." && $file != "..") {
-                echo "<li><a href='uploads/$file'>$file</a></li>";
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
+    <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
+        <h1 class="text-2xl font-bold mb-4">Unggah File</h1>
+        <form action="" method="post" enctype="multipart/form-data" class="mb-6">
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="fileToUpload">Pilih file untuk diunggah:</label>
+                <input type="file" name="fileToUpload" id="fileToUpload" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
+            <div>
+                <button type="submit" name="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Unggah File
+                </button>
+            </div>
+        </form>
+        <h2 class="text-xl font-bold mb-4">Daftar File yang Diunggah</h2>
+        <ul class="list-disc list-inside">
+            <?php
+            $files = scandir("uploads/");
+            foreach ($files as $file) {
+                if ($file != "." && $file != ".." && $file != ".gitignore") {
+                    echo "<li><a href='uploads/$file' class='text-blue-500 hover:underline'>$file</a></li>";
+                }
             }
-        }
-        ?>
-    </ul>
+            ?>
+        </ul>
+    </div>
 </body>
-
 </html>
