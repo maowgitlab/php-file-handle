@@ -42,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['fileToUpload'])) {
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
     <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
+        <span class="block text-gray-700 text-sm font-bold mb-2">Note: File harus berekstensi .jpg, .jpeg, .png, atau .gif</span>
         <h1 class="text-2xl font-bold mb-4">Unggah File</h1>
         <form action="" method="post" enctype="multipart/form-data" class="mb-6">
             <div class="mb-4">
